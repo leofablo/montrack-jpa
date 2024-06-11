@@ -1,15 +1,15 @@
 package com.montrack_jpa.montract_jpa.user.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.montrack_jpa.montract_jpa.wallet.entity.Wallet;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.ColumnDefault;
+
 
 import java.time.Instant;
+
 
 @Setter
 @Getter
@@ -34,9 +34,11 @@ public class User {
     @Column(name = "quote", nullable = false)
     private String quote;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at", nullable = false)
     private Instant createAt;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
@@ -47,5 +49,8 @@ public class User {
     private Instant isDeleted;
 
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "wallet_id", nullable = false)
+    private Wallet wallet;
 
 }
